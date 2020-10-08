@@ -52,6 +52,7 @@ app.get('/api/getitem/:id', (req, res) => {
 		);
 	});
 })
+
 app.get('/api/getitems', (req, res) => {
 	pool.getConnection(function(err, connection) {
 

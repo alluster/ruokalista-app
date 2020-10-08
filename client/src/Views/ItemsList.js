@@ -23,30 +23,13 @@ const ItemsList = () => {
 	
 		});
 	}
-	const DeleteItem = async ( id ) => {
-		setIsLoading(true)
-		await axios.get(`/api/deleteitem/${id}`, {
 	
-		})
-		.then(
-			alert("Tuote poistettu"),
-			GetItems()
-		)
-		.catch(function (error) {
-			console.log(error);
-		})
-		.finally(function () {
-			setIsLoading(false)
-	
-		});
-	}
 	useEffect(() => {
 		GetItems()
 		
 	}, [])
 	return (
 		<div>
-			{console.log(items)}
 				{
 					!loading ? 
 					
