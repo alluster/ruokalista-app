@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Container, CloseButton } from 'react-bootstrap';
+import { Card, Container, Button } from 'react-bootstrap';
 import axios from 'axios'
 
 const ItemsList = () => {
