@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Container } from 'react-bootstrap';
+import { Card, Container, CloseButton } from 'react-bootstrap';
 import axios from 'axios'
 
 const ItemsList = () => {
@@ -45,7 +45,7 @@ const ItemsList = () => {
 								  <Card.Text>
 									{item.price}
 								  </Card.Text>
-								  <Card.Link href={`/item/${item.id}`}>Order product</Card.Link>
+								  <Button href={`/item/${item.id}`}>Tilaa</Button>
 								</Card.Body>
 							  </Card>
 			
