@@ -12,7 +12,7 @@ import Item from './Views/Item';
 function App() {
   return (
     <Router>
-      <div>
+      <div style={{background: "transparent"}}>
         <Switch>
 		<Route path="/item/:id" render={(props) => <Item {...props} />}/> 
           <Route path="/">
