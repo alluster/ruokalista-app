@@ -35,15 +35,11 @@ const Checkout = (props) => {
 		e.preventDefault();
 		setIsLoading(true)
 		return (
-
 			setIsLoading(false), 
 			props.history.push(`/`),
 			alert("Kiitos tilauksestasi")
-		)
-			
-		
-			
-		} 
+		)	
+	} 
 		
 	
 	useEffect(() => {
