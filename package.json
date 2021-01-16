@@ -1,6 +1,9 @@
 {
-	"name": "kitchen-server",
+	"name": "menu-server",
 	"version": "1.0.0",
+	"engines": {
+		"node": "12.x"
+	  },
 	"scripts": {
 		"client": "cd client && npm run start",
 		"server": "nodemon server.js",
