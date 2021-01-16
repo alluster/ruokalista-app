@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Container, Button, Form } from 'react-bootstrap';
 import axios from 'axios'
-import uuidv4 from 'uuid/v4'
+import { uuid } from 'uuidv4';
 
 const Item = (props) => {
 	const Info = {
@@ -154,7 +154,7 @@ const Item = (props) => {
 
 	useEffect(() => {
 		GetItem()
-		setFields({...fields, orderId: uuidv4()})
+		setFields({...fields, orderId: uuid()})
 	}, [])
 	return (
 		<div>
