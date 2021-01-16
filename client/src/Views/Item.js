@@ -1,16 +1,73 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Container, Button, Form } from 'react-bootstrap';
 import axios from 'axios'
+import uuidv4 from 'uuid/v4'
 
 const Item = (props) => {
-
+	const Info = {
+		fields: [
+			{
+				fieldName: 'Eritysitoiveet kuten allergia',
+				value: 'commentsKitchen',
+				placeholder: ''
+			},
+			{
+				fieldName: 'Tilaajan nimi',
+				value: 'name',
+				placeholder: 'Anna nimi joka näkyy toimitusosoiteessa'
+			},
+			{
+				fieldName: 'Toimitusosoite',
+				value: 'streetAddress',
+				placeholder: ''
+			},
+			{
+				fieldName: 'Postinumero',
+				value: 'postalCode',
+				placeholder: ''
+			},
+			{
+				fieldName: 'Kaupunki',
+				value: 'city',
+				placeholder: ''
+			},
+			{
+				fieldName: 'Tilaajan puhelinumero',
+				value: 'phone',
+				placeholder: ''
+			},
+			{
+				fieldName: 'Tilaajan sähköpostiosoite',
+				value: 'email',
+				placeholder: ''
+			},
+			{
+				fieldName: 'Kommentti kuljettajalle',
+				value: 'commentsTransport',
+				placeholder: 'esim. ovikoodi'
+			},
+		]
+	}
 	const [item, setItem] = useState({})
 	const [loading, setIsLoading] = useState(false)
-	const [name, setName] = useState("")
-	const [address, setAddress] = useState("")
-	const [comments, setComments] = useState("")
+	const [fields, setFields] = useState(
+			{
+				name: '',
+				streetAddress: '',
+				postalCode: '',
+				city: '',
+				phone: '',
+				email: '',
+				commentsKitchen: '',
+				commentsTransport: '',
+				itemName: '',
+				orderId: ''
+			});
+	
+
 	let id = props.match.params.id
-	console.log(item)
+
+	
 
 	const GetItem = async () => {
 		setIsLoading(true)
@@ -32,59 +89,85 @@ const Item = (props) => {
 	}
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+		setIsLoading(true)
 		try {
 			return await axios.get('/api/addorder',  {
 				params: {
-					order_address: address,
-					comments: comments,
-					item_name: item.name
-					
+					customer_name: fields.name,
+					customer_street: fields.streetAddress,
+					customer_city: fields.city,
+					customer_postal_code: fields.postalCode,
+					customer_phone: fields.phone,
+					customer_email: fields.email,
+					comments_transport: fields.commentsTransport,
+					comments_kitchen: fields.commentsKitchen,
+					item_name: fields.itemName,
+					order_id: fields.orderId					
 				}	
 			})
-		
-			.then(alert("Tuote tilattu, kiitos tilauksestanne"),
-			props.history.push('/')
-		)
+			
+			.then(
+				setIsLoading(false), 
+				props.history.push(`/checkout/${fields.orderId}`)
+			)
 		} 
 		catch (error) {
+			if(error) {
+				return alert(error.message)
+
+			}
 			console.error(error.message)
 		}
 	}
+	const validateForm = () => {
+		return fields.name.length > 0 && fields.streetAddress.length > 0 && fields.city.length > 0 && fields.postalCode.length > 0 && fields.phone.length > 0
+	}
+	const inputChange = e => {
+		validateForm()
+		const { name, value } = e.target;
+		setFields ({ ...fields, [name]: value });
+	};
+
+	const Fields = () => {
+		return (
+			Info.fields.map((item, i) => {
+				return (
+					<Form key={i} >	
+					<Form.Group controlId="formBasicEmail">
+						<Form.Label>{item.fieldName}</Form.Label>
+							<Form.Control 
+								type="text" 
+								name={item.value}
+								onChange={inputChange}
+								required
+							/>
+						<Form.Text className="text-muted" >
+							{item.placeholder}
+						</Form.Text>
+					</Form.Group>
+				</Form>
+				)
+			})
+		)
+		
+	}
+
 	useEffect(() => {
 		GetItem()
+		setFields({...fields, orderId: uuidv4()})
 	}, [])
 	return (
 		<div>
-				<h1>{item.name}</h1>
-				<h2>{item.description}</h2>
-				<h3>{item.price}</h3>
-				<Form>
-				<Form.Group controlId="formBasicEmail">
-					<Form.Label>Full name</Form.Label>
-					<Form.Control type="text" placeholder="Enter your name" value={name} onChange={(e) => setName(e.target.value)} />
-						<Form.Text className="text-muted" >
-							First Name Family name
-						</Form.Text>
-				</Form.Group>
-				<Form.Group controlId="formBasicEmail">
-					<Form.Label>Address</Form.Label>
-					<Form.Control type="text" placeholder="Please give your address" value={address} onChange={(e) => setAddress(e.target.value)} />
-					<Form.Text className="text-muted">
-						Street address so we can find you
-					</Form.Text>
-				</Form.Group>
-				<Form.Group >
-					<Form.Label>Comments</Form.Label>
-					<Form.Control type="text" placeholder="Door code" value={comments} onChange={(e) => setComments(e.target.value)} />
-					<Form.Text className="text-muted">
-						Door code etc.
-					</Form.Text>
-				</Form.Group>
-		
-				<Button variant="primary" type="submit" onClick={e => handleSubmit(e)}>
-					Order meal
-				</Button>
-			</Form>
+			<h1>{item.name}</h1>
+			<h2>{item.description}</h2>
+			<h3>{item.price}</h3>
+			{Fields()}
+
+			<Button variant="primary" type="submit" onClick={e => handleSubmit(e)}  disabled={!validateForm()}>
+				Siirry maksamaan
+			</Button>
+
+				
 			
 			</div>
   );

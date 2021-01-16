@@ -8,16 +8,17 @@ import {
   } from "react-router-dom";
 import ItemsList from './Views/ItemsList';
 import Item from './Views/Item';
+import Checkout from './Views/Checkout';
 
 function App() {
   return (
     <Router>
       <div style={{background: "transparent"}}>
         <Switch>
-		<Route path="/item/:id" render={(props) => <Item {...props} />}/> 
-          <Route path="/">
-            <ItemsList />
-          </Route>
+			<Route exact path="/item/:id" render={(props) => <Item {...props} />}/> 
+          	<Route exact path="/" render={() => <ItemsList />} />
+			<Route exact path="/checkout/:id" render={(props) => <Checkout {...props} />} />
+
         </Switch>
       </div>
     </Router>
