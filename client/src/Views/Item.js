@@ -101,7 +101,7 @@ const Item = (props) => {
 					customer_email: fields.email,
 					comments_transport: fields.commentsTransport,
 					comments_kitchen: fields.commentsKitchen,
-					item_name: fields.itemName,
+					item_name: item.name,
 					order_id: fields.orderId					
 				}	
 			})
