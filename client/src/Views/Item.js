@@ -102,7 +102,8 @@ const Item = (props) => {
 					comments_transport: fields.commentsTransport,
 					comments_kitchen: fields.commentsKitchen,
 					item_name: item.name,
-					order_id: fields.orderId					
+					order_id: uuid(),
+					order_paid: (new Date()).getHours() + ":" + (new Date()).getMinutes() + ":" + (new Date()).getSeconds()				
 				}	
 			})
 			
@@ -158,9 +159,9 @@ const Item = (props) => {
 	}, [])
 	return (
 		<div>
-			<h1>{item.name}</h1>
-			<h2>{item.description}</h2>
-			<h3>{item.price}</h3>
+			<h3>{item.name}</h3>
+			<h4>{item.description}</h4>
+			<h5>{item.price}</h5>
 			{Fields()}
 
 			<Button variant="primary" type="submit" onClick={e => handleSubmit(e)}  disabled={!validateForm()}>
