@@ -68,11 +68,11 @@ app.get('/api/getitem/:id', (req, res) => {
 	});
 })
 
-app.get('/api/getitems/:id', (req, res) => {
+app.get('/api/getitems', (req, res) => {
 	pool.getConnection(function(err, connection) {
 
 		if (err) throw err; 
-		query = SQL`SELECT * FROM items WHERE restaurant_id=${req.params.id}`
+		query = SQL`SELECT * FROM items WHERE restaurant_id=${req.query.restaurantId}`
 		connection.query(
 			query,
 			function (error, results, fields) {

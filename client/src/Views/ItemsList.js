@@ -9,7 +9,10 @@ const ItemsList = (props) => {
 
 	const GetItems = async () => {
 		setIsLoading(true)
-		await axios.get(`/api/getitems/${id}`, {
+		await axios.get(`/api/getitems`, {
+			params: {
+				restaurantId: id
+			}
 		})
 		.then(function (response) {
 			let data = response.data
