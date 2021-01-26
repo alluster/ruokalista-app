@@ -1,7 +1,7 @@
 require('dotenv').config()
 const express = require('express');
 const app = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 8000;
 const mysql = require('mysql');
 const SQL = require('sql-template-strings')
 const sslRedirect = require('heroku-ssl-redirect');
@@ -68,11 +68,11 @@ app.get('/api/getitem/:id', (req, res) => {
 	});
 })
 
-app.get('/api/getitems', (req, res) => {
+app.get('/api/getitems/:id', (req, res) => {
 	pool.getConnection(function(err, connection) {
 
 		if (err) throw err; 
-		query = SQL`SELECT * FROM items`
+		query = SQL`SELECT * FROM items WHERE restaurant_id=${req.params.id}`
 		connection.query(
 			query,
 			function (error, results, fields) {
@@ -83,21 +83,7 @@ app.get('/api/getitems', (req, res) => {
 		);
 	});
 })
-app.get('/api/getorders', (req, res) => {
-	pool.getConnection(function(err, connection) {
 
-		if (err) throw err; 
-		query = SQL`SELECT * FROM orders`
-		connection.query(
-			query,
-			function (error, results, fields) {
-				res.send(results)
-				connection.release();
-				if (error) throw error;
-			}
-		);
-	});
-})
 
 // OP Checkout test
 
@@ -150,6 +136,6 @@ app.get('/api/getpaymentmethods', (req, res) => {
 app.get('*', (req,res) =>{
     res.sendFile(path.join(__dirname+'/client/build/index.html'));
 });
-app.listen(process.env.PORT || 5000, 
+app.listen(process.env.PORT || 8000, 
 	() => console.log("Server is running..."));
 

@@ -103,7 +103,7 @@ const Item = (props) => {
 					comments_kitchen: fields.commentsKitchen,
 					item_name: item.name,
 					order_id: uuid(),
-					order_paid: (new Date()).getHours() + ":" + (new Date()).getMinutes() + ":" + (new Date()).getSeconds()				
+					order_paid: (new Date()).getHours() + ":" + (new Date()).getMinutes() + ":" + (new Date()).getSeconds() + "-" +	(new Date()).getDate() + "." + (new Date()).getMonth()+1 + "." + (new Date()).getFullYear()  			
 				}	
 			})
 			
@@ -158,7 +158,7 @@ const Item = (props) => {
 		setFields({...fields, orderId: uuid()})
 	}, [])
 	return (
-		<div>
+		<Container>
 			<h3>{item.name}</h3>
 			<h4>{item.description}</h4>
 			<h5>{item.price}</h5>
@@ -170,7 +170,7 @@ const Item = (props) => {
 
 				
 			
-			</div>
+			</Container>
   );
 }
 

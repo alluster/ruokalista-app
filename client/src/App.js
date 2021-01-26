@@ -16,7 +16,7 @@ function App() {
       <div style={{background: "transparent"}}>
         <Switch>
 			<Route exact path="/item/:id" render={(props) => <Item {...props} />}/> 
-          	<Route exact path="/" render={() => <ItemsList />} />
+          	<Route exact path="/:id" render={(props) => <ItemsList {...props} />} />
 			<Route exact path="/checkout/:id" render={(props) => <Checkout {...props} />} />
 
         </Switch>

@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Card, Container, Button } from 'react-bootstrap';
 import axios from 'axios'
 
-const ItemsList = () => {
+const ItemsList = (props) => {
 	const [items, setItems] = useState([])
 	const [loading, setIsLoading] = useState(false)
+	let id = props.match.params.id
+
 	const GetItems = async () => {
 		setIsLoading(true)
-		await axios.get('/api/getitems', {
+		await axios.get(`/api/getitems/${id}`, {
 		})
 		.then(function (response) {
 			let data = response.data
@@ -23,7 +25,7 @@ const ItemsList = () => {
 	
 		});
 	}
-	
+
 	useEffect(() => {
 		GetItems()
 		
