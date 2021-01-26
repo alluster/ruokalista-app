@@ -27,7 +27,7 @@ const pool = mysql.createPool({
 app.get('/api/addorder', (req, res) => {
 	pool.getConnection(function(err, connection) {
 		if (err) throw err; 
-		query = SQL`INSERT INTO orders (customer_name,customer_street,customer_city,customer_postal_code,customer_phone,customer_email,comments_transport,comments_kitchen,item_name, order_id, order_paid) VALUES (
+		query = SQL`INSERT INTO orders (customer_name,customer_street,customer_city,customer_postal_code,customer_phone,customer_email,comments_transport,comments_kitchen,item_name, order_id, order_paid, restaurant_id) VALUES (
 			${req.query.customer_name}, 
 			${req.query.customer_street},
 			${req.query.customer_city},
@@ -38,7 +38,8 @@ app.get('/api/addorder', (req, res) => {
 			${req.query.comments_kitchen},
 			${req.query.item_name},
 			${req.query.order_id},
-			${req.query.order_paid}
+			${req.query.order_paid},
+			${req.query.restaurantId}
 			)`
 		connection.query(
 			query,

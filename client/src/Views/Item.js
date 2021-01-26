@@ -103,13 +103,20 @@ const Item = (props) => {
 					comments_kitchen: fields.commentsKitchen,
 					item_name: item.name,
 					order_id: uuid(),
-					order_paid: (new Date()).getHours() + ":" + (new Date()).getMinutes() + ":" + (new Date()).getSeconds() + "-" +	(new Date()).getDate() + "." + (new Date()).getMonth()+1 + "." + (new Date()).getFullYear()  			
+					order_paid: (new Date()).getHours() + ":" + (new Date()).getMinutes() + ":" + (new Date()).getSeconds() + "-" +	(new Date()).getDate() + "." + (new Date()).getMonth()+1 + "." + (new Date()).getFullYear(),  			
+					restaurantId: props.location.state.restaurantId
 				}	
 			})
 			
 			.then(
 				setIsLoading(false), 
-				props.history.push(`/checkout/${fields.orderId}`)
+				props.history.push({
+					
+					pathname: `/checkout/${fields.orderId}`,
+					state: {
+					 restaurantId: props.location.state.restaurantId
+					}
+				})
 			)
 		} 
 		catch (error) {
@@ -156,6 +163,7 @@ const Item = (props) => {
 	useEffect(() => {
 		GetItem()
 		setFields({...fields, orderId: uuid()})
+		console.log(props)
 	}, [])
 	return (
 		<Container>

@@ -36,7 +36,11 @@ const Checkout = (props) => {
 		setIsLoading(true)
 		return (
 			setIsLoading(false), 
-			props.history.push(`/`),
+			props.history.push({
+					
+				pathname: `/${props.location.state.restaurantId}`
+				
+			}),
 			alert("Kiitos tilauksestasi")
 		)	
 	} 
@@ -44,6 +48,7 @@ const Checkout = (props) => {
 	
 	useEffect(() => {
 		GetPaymentMethods()
+		console.log(props)
 	}, [])
 	return (
 		<Container>

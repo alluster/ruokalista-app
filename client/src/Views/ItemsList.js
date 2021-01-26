@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Container, Button } from 'react-bootstrap';
 import axios from 'axios'
-
+import {
+	BrowserRouter as Router,
+	Switch,
+	Route,
+	Link
+  } from "react-router-dom";
 const ItemsList = (props) => {
 	const [items, setItems] = useState([])
 	const [loading, setIsLoading] = useState(false)
@@ -50,7 +55,18 @@ const ItemsList = (props) => {
 								  <Card.Text>
 									{item.price}
 								  </Card.Text>
-								  <Button href={`/item/${item.id}`}>Tilaa</Button>
+								 <Link 
+								 
+								 to={{
+									pathname: `/item/${item.id}`,
+									state: {
+									 restaurantId: id
+									}
+								 }}
+								 
+								 >
+								 <Button >Tilaa</Button>
+								 </Link> 
 								</Card.Body>
 							  </Card>
 			
